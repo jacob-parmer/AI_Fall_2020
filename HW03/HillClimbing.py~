@@ -1,0 +1,87 @@
+"""
+### Author: Jacob Parmer, Auburn University
+###
+### Last Updated: September 12, 2020
+"""
+
+import numpy as np
+from pudb import set_trace
+
+# consts defining queen spaces and empty spaces on chess board
+EMPTY = 0
+QUEEN = 1
+
+class nQueens:
+
+    """
+    Creates a chessboard of size nxn, initializes all queens to the first row of the chessboard.
+    Chessboard is represented as a 2d numpy array, empty spaces on the board are represented by 
+    the value "0", and spaces with queens are represented by the value "1"
+
+    """
+    def __init__(self, n = 25):
+
+        if (n < 5):
+            print("Size of chess board cannot be less than 5.")
+            exit()
+
+        self.n = n
+        self.board = np.zeros((n,n), dtype=int)
+        queens = np.ones((n,), dtype=int)
+        np.put(self.board, range(n), queens)
+
+        self.board = np.array([[1, 0, 0, 0, 1],
+                               [0, 1, 0, 0, 0],
+                               [0, 0, 0, 0, 0],
+                               [0, 0, 1, 0, 0],
+                               [0, 0, 0, 1, 0]])
+    """
+    Determines the score heuristic for hill climbing algorithm. Does this by detecting number of
+    queens in board that are interfering with one another.
+
+    """
+    def score(self):
+        
+        score = 0
+
+        for i, row in enumerate(self.board):
+            for j, space in enumerate(row):
+
+                if (self.board[i][j] == QUEEN):
+                    diag = np.diagonal(self.board, offset=(j - i))        
+                    idiag = np.fliplr(self.board).diagonal(offset=(self.n - (j - i)))
+
+                    if QUEEN in diag[i+1:]:
+                        score = score + 1
+
+                    if QUEEN in idiag[i+1:]:
+                        score = score + 1
+
+        return score
+
+    """
+    Returns all possible movements given the current state of the board and the limitation that
+    queens may only move in their respective columns.
+
+    """
+    def getNeighbors():
+        return
+
+    """
+    Sets the board to the desired state, given that it is better than the current one.
+
+    """
+    def climb():
+        return
+
+
+def main():
+
+    set_trace()
+    
+    queens = nQueens(5)
+    queens.score()
+
+if __name__ == "__main__":
+    main()
+
