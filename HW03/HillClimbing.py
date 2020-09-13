@@ -5,6 +5,7 @@
 """
 
 import numpy as np
+import random as rnd
 from copy import deepcopy
 from pudb import set_trace
 
@@ -65,6 +66,19 @@ class ChessBoard:
         self.board = newBoard
         return
 
+    """
+    Resets the board to a random state in which there is still 1 queen per column. 
+
+    """
+    def randomResetBoard(self):
+
+        self.board = np.zeros((self.n, self.n), dtype=int)
+        for x in range(self.n):
+            randRow = rnd.randrange(self.n)
+            np.put(self.board, ((randRow * self.n) + x), QUEEN)
+
+        self.updateScore()
+
 class nQueens:
 
     """
@@ -89,11 +103,13 @@ class nQueens:
 def main():
 
     #set_trace()
-    
+
     n = 25
-    MAX_TRIES = 1000
+    MAX_TRIES = 100 
     current_tries = 0
     
+    # Hill climbing without random restarts
+
     board = ChessBoard(n)
 
     while (board.score != 0 and current_tries < MAX_TRIES):
@@ -103,11 +119,29 @@ def main():
                 board = neighbor
 
         current_tries = current_tries + 1
-        print(current_tries)
                 
-
     print(board.board)
     print(board.score)
+
+    # Hill climbing with random restarts
+
+    board2 = ChessBoard(n)
+    current_tries = 0
+
+    while (board2.score != 0):
+        if (current_tries > MAX_TRIES):
+            board2.randomResetBoard()
+            current_tries = 0
+
+        neighbors2 = nQueens.getNeighbors(board2, n)
+        for neighbor2 in neighbors2:
+            if (neighbor2.score <= board2.score):
+                board2 = neighbor2
+
+        current_tries = current_tries + 1
+
+    print(board2.board)
+    print(board2.score)
 
 if __name__ == "__main__":
     main()
