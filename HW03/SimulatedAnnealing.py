@@ -109,6 +109,12 @@ class SimAnnealing:
 
         return score
 
+    """
+    Takes in a current board state, and outputs the next one through Simulated Annealing.
+    This means that the next state can randomly choose a less-perfect state, although this is
+    more likely the higher the value of "temp".
+
+    """
     def findNextState(cb, neighbors, temp):
         
         if (temp == 0): # if T = 0, return current board
