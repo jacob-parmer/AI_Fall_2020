@@ -6,6 +6,7 @@
 
 import numpy as np
 import random as rnd
+import time
 from copy import deepcopy
 from pudb import set_trace
 
@@ -105,12 +106,14 @@ def main():
     #set_trace()
 
     n = 25
-    MAX_TRIES = 100 
+    MAX_TRIES = 40 
     current_tries = 0
     
     # Hill climbing without random restarts
 
     board = ChessBoard(n)
+
+    start_time = time.time()
 
     while (board.score != 0 and current_tries < MAX_TRIES):
         neighbors = nQueens.getNeighbors(board, n)
@@ -122,12 +125,14 @@ def main():
                 
     print(board.board)
     print(board.score)
+    print(f"Total time taken in seconds for Hill Climbing without Random Restarts for nQueens problem with size {n}: {time.time() - start_time} \n")
 
     # Hill climbing with random restarts
 
     board2 = ChessBoard(n)
     current_tries = 0
 
+    start_time = time.time()
     while (board2.score != 0):
         if (current_tries > MAX_TRIES):
             board2.randomResetBoard()
@@ -142,7 +147,8 @@ def main():
 
     print(board2.board)
     print(board2.score)
-
+    print(f"Total time taken in seconds for Hill Climbing with Random Restarts for nQueens problem with size {n}: {time.time() - start_time} \n")
+ 
 if __name__ == "__main__":
     main()
 

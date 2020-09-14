@@ -7,6 +7,7 @@
 import numpy as np
 import random as rnd
 import math
+import time
 from copy import deepcopy
 from pudb import set_trace
 
@@ -135,11 +136,13 @@ def main():
     #set_trace()
 
     n = 25
-    temp = 25.0
+    temp = 12.0
     current_tries = 0
     
     cb = ChessBoard()
     finished = False
+
+    start_time = time.time()
 
     while (temp >= 0):
         neighbors = SimAnnealing.getNeighbors(cb)
@@ -149,6 +152,7 @@ def main():
     print(cb.board)
     print(SimAnnealing.getScore(cb))
 
+    print(f"total time taken for Simulated Annealing: {time.time() - start_time} \n") 
 if __name__ == "__main__":
     main()
 
